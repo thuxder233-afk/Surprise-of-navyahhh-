@@ -1,0 +1,579 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Our Sacred Story | To Navya Sree 🪶🪷</title>
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@600;700&family=Great+Vibes&family=Plus+Jakarta+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <!-- Canvas Confetti Library -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        :root {
+            --royal-bg: radial-gradient(circle at center, #0B192C 0%, #1E3E62 50%, #000000 100%);
+            --gold-primary: #F1C40F;
+            --gold-light: #F9E79F;
+            --pink-accent: #FFB7B2;
+            --glass-card: rgba(15, 32, 67, 0.82);
+            --border-glow: 0 0 25px rgba(241, 196, 15, 0.4);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            background: #060e1a;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            overflow-x: hidden;
+            position: relative;
+            color: #E5E8E8;
+            padding: 20px 0;
+        }
+
+        /* Interactive Particle Background */
+        #bgCanvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* Floating Symbols Animation */
+        .symbol-bg {
+            position: absolute;
+            color: rgba(241, 196, 15, 0.5);
+            animation: floatUp linear infinite;
+            bottom: -50px;
+            user-select: none;
+            pointer-events: none;
+            z-index: 1;
+            filter: drop-shadow(0 0 8px rgba(241, 196, 15, 0.6));
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) rotate(0deg) scale(0.8); opacity: 0; }
+            20% { opacity: 0.9; }
+            80% { opacity: 0.9; }
+            100% { transform: translateY(-115vh) rotate(360deg) scale(1.2); opacity: 0; }
+        }
+
+        /* Main Container */
+        .container {
+            width: 92%;
+            max-width: 480px;
+            z-index: 10;
+        }
+
+        /* Glowing Animated Card */
+        .card {
+            background: var(--glass-card);
+            backdrop-filter: blur(22px);
+            -webkit-backdrop-filter: blur(22px);
+            padding: 35px 22px;
+            border-radius: 28px;
+            box-shadow: var(--border-glow);
+            border: 1.5px solid rgba(241, 196, 15, 0.45);
+            text-align: center;
+            position: relative;
+            transition: all 0.4s ease;
+            animation: cardGlow 4s infinite alternate ease-in-out;
+        }
+
+        @keyframes cardGlow {
+            0% { box-shadow: 0 0 20px rgba(241, 196, 15, 0.25); border-color: rgba(241, 196, 15, 0.35); }
+            100% { box-shadow: 0 0 35px rgba(241, 196, 15, 0.55); border-color: rgba(241, 196, 15, 0.7); }
+        }
+
+        .header-icon {
+            font-size: 2.5rem;
+            display: block;
+            margin-bottom: 5px;
+            animation: pulseIcon 2.5s infinite ease-in-out;
+        }
+
+        @keyframes pulseIcon {
+            0%, 100% { transform: scale(1); filter: drop-shadow(0 0 8px rgba(241, 196, 15, 0.5)); }
+            50% { transform: scale(1.1); filter: drop-shadow(0 0 16px rgba(241, 196, 15, 0.8)); }
+        }
+
+        h1.title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 3.8rem;
+            color: var(--gold-light);
+            line-height: 1.1;
+            text-shadow: 0 0 14px rgba(241, 196, 15, 0.5);
+        }
+
+        .subtitle {
+            font-family: 'Cinzel', serif;
+            font-size: 0.8rem;
+            letter-spacing: 3px;
+            color: var(--pink-accent);
+            margin-bottom: 25px;
+            text-transform: uppercase;
+        }
+
+        .chapter-tag {
+            display: inline-block;
+            font-family: 'Cinzel', serif;
+            font-size: 0.75rem;
+            background: rgba(241, 196, 15, 0.18);
+            color: var(--gold-primary);
+            padding: 4px 14px;
+            border-radius: 20px;
+            border: 1px solid rgba(241, 196, 15, 0.4);
+            margin-bottom: 12px;
+            letter-spacing: 1.5px;
+            box-shadow: 0 0 10px rgba(241, 196, 15, 0.2);
+        }
+
+        .chapter-title {
+            font-family: 'Cinzel', serif;
+            font-size: 1.25rem;
+            color: var(--gold-light);
+            margin-bottom: 15px;
+        }
+
+        /* Animated Story Text Transition */
+        .story-text {
+            font-size: 0.98rem;
+            line-height: 1.75;
+            color: #F2F4F4;
+            font-weight: 300;
+            margin-bottom: 25px;
+            min-height: 140px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            opacity: 1;
+            transition: opacity 0.35s ease, transform 0.35s ease;
+        }
+
+        .story-text.fade-out {
+            opacity: 0;
+            transform: translateY(8px);
+        }
+
+        /* Timeline Navigation Dots */
+        .dots-container {
+            display: flex;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 25px;
+        }
+
+        .dot {
+            width: 9px;
+            height: 9px;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .dot.active {
+            background: var(--gold-primary);
+            width: 24px;
+            border-radius: 10px;
+            box-shadow: 0 0 12px var(--gold-primary);
+        }
+
+        /* Polaroid Photo Boxes */
+        .memory-box {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+            margin-bottom: 25px;
+        }
+
+        .polaroid {
+            background: rgba(255, 255, 255, 0.08);
+            padding: 6px 6px 16px 6px;
+            border-radius: 10px;
+            border: 1px solid rgba(241, 196, 15, 0.35);
+            width: 115px;
+            cursor: pointer;
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .polaroid:hover {
+            transform: scale(1.05) rotate(-1deg);
+            box-shadow: 0 0 15px rgba(241, 196, 15, 0.4);
+        }
+
+        .polaroid img {
+            width: 100%;
+            height: 95px;
+            object-fit: cover;
+            border-radius: 6px;
+        }
+
+        .polaroid span {
+            font-family: 'Cinzel', serif;
+            font-size: 0.68rem;
+            color: var(--gold-light);
+            display: block;
+            margin-top: 5px;
+        }
+
+        input[type="file"] { display: none; }
+
+        /* Buttons */
+        .btn-next {
+            width: 100%;
+            padding: 14px;
+            font-family: 'Cinzel', serif;
+            font-size: 0.95rem;
+            font-weight: 700;
+            color: #0B192C;
+            background: linear-gradient(135deg, #F1C40F, #D4AC0D);
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.35);
+            letter-spacing: 1px;
+            transition: all 0.25s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-next:active {
+            transform: scale(0.98);
+        }
+
+        .interactive-section {
+            position: relative;
+            min-height: 55px;
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+        }
+
+        .btn-yes {
+            padding: 12px 30px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            background: linear-gradient(135deg, #F1C40F, #D4AC0D);
+            color: #0B192C;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 6px 20px rgba(241, 196, 15, 0.45);
+            z-index: 3;
+            transition: all 0.2s ease;
+        }
+
+        .btn-yes:hover {
+            transform: scale(1.06);
+            box-shadow: 0 0 25px rgba(241, 196, 15, 0.8);
+        }
+
+        .btn-no {
+            padding: 12px 30px;
+            font-family: 'Cinzel', serif;
+            font-weight: 700;
+            background: rgba(255, 255, 255, 0.12);
+            color: #BDC3C7;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 50px;
+            position: absolute;
+            right: 20px;
+            transition: all 0.15s ease-out;
+            z-index: 2;
+        }
+
+        .hidden { display: none !important; }
+
+        .final-promise {
+            font-family: 'Cinzel', serif;
+            font-size: 1.1rem;
+            color: var(--gold-light);
+            background: rgba(241, 196, 15, 0.15);
+            padding: 18px;
+            border-radius: 16px;
+            margin: 20px 0;
+            border: 1px solid var(--gold-primary);
+            line-height: 1.6;
+            font-weight: 600;
+            box-shadow: 0 0 25px rgba(241, 196, 15, 0.35);
+            animation: pulsePromise 3s infinite alternate ease-in-out;
+        }
+
+        @keyframes pulsePromise {
+            0% { transform: scale(1); }
+            100% { transform: scale(1.02); }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Particle Glow Canvas -->
+    <canvas id="bgCanvas"></canvas>
+
+    <div class="container">
+        <!-- Story Card -->
+        <div class="card" id="storyCard">
+            <span class="header-icon">🪶🪷</span>
+            <h1 class="title">Navya Sree</h1>
+            <div class="subtitle" id="subHeader">Our Sacred Journey</div>
+
+            <div class="chapter-tag" id="chapterTag">CHAPTER 1 OF 5</div>
+            <div class="chapter-title" id="chapterTitle">The School Banner</div>
+
+            <!-- Chapter Content -->
+            <div class="story-text" id="storyContent">
+                Ninnu modati sari mee school banner meeda choosa, Navya. School 2nd ranker vi nuvvu... Aa roju neetho matlade antha confidence naku ledu. Dooram gane ninnu choosi chala admire chesa.
+            </div>
+
+            <!-- Timeline Dots -->
+            <div class="dots-container" id="dotsContainer">
+                <div class="dot active"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+                <div class="dot"></div>
+            </div>
+
+            <!-- Photo Upload Box -->
+            <div class="memory-box hidden" id="photoBox">
+                <label class="polaroid" for="photo1Input">
+                    <img id="photo1" src="" alt="Memory 1" style="display:none;">
+                    <div id="placeholder1" style="height:95px; display:flex; align-items:center; justify-content:center; color:var(--gold-primary); font-size:1.5rem;">🪶</div>
+                    <span>Childhood Days</span>
+                </label>
+                <input type="file" id="photo1Input" accept="image/*" onchange="loadFile(event, 'photo1', 'placeholder1')">
+
+                <label class="polaroid" for="photo2Input">
+                    <img id="photo2" src="" alt="Memory 2" style="display:none;">
+                    <div id="placeholder2" style="height:95px; display:flex; align-items:center; justify-content:center; color:var(--pink-accent); font-size:1.5rem;">🪷</div>
+                    <span>Temple Memory</span>
+                </label>
+                <input type="file" id="photo2Input" accept="image/*" onchange="loadFile(event, 'photo2', 'placeholder2')">
+            </div>
+
+            <button class="btn-next" id="nextBtn" onclick="nextChapter()">Read Next Chapter ✨</button>
+
+            <!-- Final Question Box -->
+            <div class="interactive-section hidden" id="interactiveBox">
+                <button class="btn-yes" id="yesBtn" onclick="triggerSuccess()">Yes, Forever 🪷</button>
+                <button class="btn-no" id="noBtn">No</button>
+            </div>
+        </div>
+
+        <!-- Success Screen -->
+        <div class="card hidden" id="successCard">
+            <span class="header-icon">👑✨</span>
+            <h1 class="title">My Promise</h1>
+            <div class="subtitle">Radha Krishna Love</div>
+            <p style="font-size: 0.95rem; line-height: 1.75; color: #E5E8E8; font-weight: 300;">
+                Navya, nenu ninnu enno sarlu impress cheyali ani, nee prema kosam fight cheyali ani fix ayya. Neeku love meeda interest lekapoyina, naa prema eppatiki maaradhu.
+            </p>
+            <div class="final-promise">
+                "I wanna be with you till my last breath." ♾️🪶
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Background Stars/Particles Effect
+        const canvas = document.getElementById('bgCanvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        const particles = [];
+        for (let i = 0; i < 45; i++) {
+            particles.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 2 + 0.5,
+                alpha: Math.random() * 0.8 + 0.2,
+                speedY: Math.random() * 0.4 + 0.1
+            });
+        }
+
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            particles.forEach(p => {
+                ctx.beginPath();
+                ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(241, 196, 15, ${p.alpha})`;
+                ctx.shadowBlur = 8;
+                ctx.shadowColor = '#F1C40F';
+                ctx.fill();
+
+                p.y -= p.speedY;
+                if (p.y < 0) {
+                    p.y = canvas.height;
+                    p.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        // Story Chapters Timeline
+        const storyChapters = [
+            {
+                tag: "CHAPTER 1 OF 5",
+                title: "The School Banner 🎓",
+                text: "Ninnu modati sari mee school banner meeda choosa, Navya. School 2nd ranker vi nuvvu... Aa roju neetho matlade antha confidence naku ledu. Dooram gane ninnu choosi chala admire chesa."
+            },
+            {
+                tag: "CHAPTER 2 OF 5",
+                title: "College & Realization 🏛️",
+                text: "Chala rojula tharuvatha mana college lo ne ninnu malli choosa. Better studies kosam nee section ki vachina roju, sudden ga gurthu vachindi—'Hey, idhi aame kadha!' ani. Enno moments waste aynyy, kani 2nd year evening nuvvu intiki velthunnappudu ninnu choosi na nijamaina prema ento naku ardham ayindi."
+            },
+            {
+                tag: "CHAPTER 3 OF 5",
+                title: "Oct 14 - 10:47 AM 📱",
+                text: "Neetho matladali ani chala korukunna, and nuvvu naa request accept chesav. Still I remember that exact moment: Oct 14 morning 10:47 AM! Bhayam thone neeku 'Hi' pampa, unsend chese lopale nuvvu reply ichav... Naa life lo aa moment nenu eppatiki marchipolenu."
+            },
+            {
+                tag: "CHAPTER 4 OF 5",
+                title: "Meeting in the Rain 🌧️🛕",
+                text: "Naa life lo bestest day ante manam Temple daggara kalavadam. Heavy rain lo, temple atmosphere lo ninnu chudagane naaku anipinchindi—nuvvu naaku oka divine gift ani. Neeku already thelusu nenu ninnu entha premisthunnano."
+            },
+            {
+                tag: "CHAPTER 5 OF 5",
+                title: "My Eternal Pledge 💖",
+                text: "Neeku love meeda peddaga interest lekapovochu, kani nenu wait chesthe manam ekkuva time spend cheyalem. Ninnu prathi roju impress chestha, nee prema kosam fight chestha. Idhi naa maata, Navya!"
+            }
+        ];
+
+        let currentChapter = 0;
+
+        function nextChapter() {
+            if (currentChapter < storyChapters.length - 1) {
+                const textEl = document.getElementById('storyContent');
+                textEl.classList.add('fade-out');
+
+                setTimeout(() => {
+                    currentChapter++;
+                    const ch = storyChapters[currentChapter];
+                    document.getElementById('chapterTag').innerText = ch.tag;
+                    document.getElementById('chapterTitle').innerText = ch.title;
+                    textEl.innerText = ch.text;
+
+                    // Update Timeline Dots
+                    const dots = document.querySelectorAll('.dot');
+                    dots.forEach((dot, idx) => {
+                        if(idx === currentChapter) dot.classList.add('active');
+                        else dot.classList.remove('active');
+                    });
+
+                    // Show Photo slots on Chapter 3
+                    if(currentChapter === 2) {
+                        document.getElementById('photoBox').classList.remove('hidden');
+                    } else {
+                        document.getElementById('photoBox').classList.add('hidden');
+                    }
+
+                    // Transform to Proposal on Final Chapter
+                    if (currentChapter === storyChapters.length - 1) {
+                        document.getElementById('nextBtn').classList.add('hidden');
+                        document.getElementById('interactiveBox').classList.remove('hidden');
+                    }
+
+                    textEl.classList.remove('fade-out');
+                }, 350);
+            }
+        }
+
+        // Image Upload Helper
+        function loadFile(event, imgId, placeholderId) {
+            const image = document.getElementById(imgId);
+            const placeholder = document.getElementById(placeholderId);
+            image.src = URL.createObjectURL(event.target.files[0]);
+            image.style.display = 'block';
+            placeholder.style.display = 'none';
+        }
+
+        // Evasive No Button Logic
+        const noBtn = document.getElementById('noBtn');
+        let evasionCount = 0;
+        const noPhrases = ["No", "Nijanga? 🪶", "Inkosaari alochinchu! ✨", "Nene impress chestha 💖", "Plz Navya! 🪷", "Yes cheppalsindhe! 🌟"];
+
+        function dodgeButton() {
+            evasionCount++;
+            if (evasionCount < noPhrases.length) {
+                noBtn.innerText = noPhrases[evasionCount];
+            } else {
+                noBtn.innerText = "Yes! 🪷";
+                noBtn.style.background = "linear-gradient(135deg, #F1C40F, #D4AC0D)";
+                noBtn.style.color = "#0B192C";
+                noBtn.onclick = triggerSuccess;
+                return;
+            }
+
+            const maxX = 100;
+            const maxY = 40;
+            const randomX = (Math.random() - 0.5) * maxX * 2;
+            const randomY = (Math.random() - 0.5) * maxY * 2;
+            noBtn.style.transform = `translate(${randomX}px, ${randomY}px) scale(0.95)`;
+        }
+
+        noBtn.addEventListener('mouseover', dodgeButton);
+        noBtn.addEventListener('click', dodgeButton);
+        noBtn.addEventListener('touchstart', (e) => { e.preventDefault(); dodgeButton(); });
+
+        // Success Celebration
+        function triggerSuccess() {
+            document.getElementById('storyCard').classList.add('hidden');
+            document.getElementById('successCard').classList.remove('hidden');
+
+            var duration = 4.5 * 1000;
+            var end = Date.now() + duration;
+
+            (function frame() {
+                confetti({
+                    particleCount: 10,
+                    angle: 60,
+                    spread: 80,
+                    origin: { x: 0 },
+                    colors: ['#F1C40F', '#FFB7B2', '#FFFFFF', '#F9E79F']
+                });
+                confetti({
+                    particleCount: 10,
+                    angle: 120,
+                    spread: 80,
+                    origin: { x: 1 },
+                    colors: ['#F1C40F', '#FFB7B2', '#FFFFFF', '#F9E79F']
+                });
+
+                if (Date.now() < end) requestAnimationFrame(frame);
+            }());
+        }
+
+        // Floating Symbols (Feathers, Lotus, Raindrops, Sparkles)
+        const symbols = ['🪶', '🪷', '✨', '💖', '🪈', '🌧️'];
+        function createSymbol() {
+            const div = document.createElement('div');
+            div.classList.add('symbol-bg');
+            div.innerHTML = symbols[Math.floor(Math.random() * symbols.length)];
+            div.style.left = Math.random() * 100 + 'vw';
+            div.style.animationDuration = (Math.random() * 3 + 5) + 's';
+            div.style.fontSize = (Math.random() * 12 + 18) + 'px';
+            document.body.appendChild(div);
+
+            setTimeout(() => div.remove(), 8000);
+        }
+        setInterval(createSymbol, 350);
+    </script>
+</body>
+</html>
